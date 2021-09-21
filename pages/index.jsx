@@ -77,7 +77,7 @@ export const getStaticProps = async () => {
     },
   ];
   const plaiceholder = 'plaiceholder-[/images/cat.jpg]';
-  const { img, base64 } = await getPlaiceholder(extractImgSrc(plaiceholder));
+  const { img } = await getPlaiceholder(extractImgSrc(plaiceholder));
 
   const images = await Promise.all(
     imagePaths.map(async (src) => {

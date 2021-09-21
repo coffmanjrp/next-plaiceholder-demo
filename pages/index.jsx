@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
 import styles from '../styles/Home.module.css';
 
-export default function Home({ imageProps }) {
-  console.log('imageProps', imageProps);
+export default function Home({ images }) {
+  console.log('imageProps', images);
   return (
     <div className={styles.container}>
       <Head>
@@ -24,41 +24,13 @@ export default function Home({ imageProps }) {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <div>
-              <Image
-                {...imageProps}
-                alt="test"
-                layout="responsive"
-                placeholder="blur"
-              />
-            </div>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {images &&
+            images.map((imageProps) => (
+              <div key={imageProps.src} className={styles.card}>
+                <Image {...imageProps} layout="responsive" placeholder="blur" />
+                <h2>{imageProps.title}</h2>
+              </div>
+            ))}
         </div>
       </main>
 
@@ -79,14 +51,31 @@ export default function Home({ imageProps }) {
 }
 
 export const getStaticProps = async () => {
-  const { base64, img } = await getPlaiceholder('/images/dogs.jpg');
+  const imagePaths = [
+    {
+      path: '/images/dog.jpg',
+      title: 'Static Base 64 Image',
+      alt: 'A Dog on the couch',
+    },
+    {
+      path: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1974&q=80',
+      title: 'Extarnal Path Image',
+      alt: 'A Dog',
+    },
+  ];
+
+  const images = await Promise.all(
+    imagePaths.map(async (src) => {
+      const { alt, path, title } = src;
+      const { base64, img } = await getPlaiceholder(path);
+
+      return { ...img, blurDataURL: base64, title, alt };
+    })
+  );
 
   return {
     props: {
-      imageProps: {
-        ...img,
-        blurDataURL: base64,
-      },
+      images,
     },
   };
 };

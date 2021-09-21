@@ -1,10 +1,15 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
+import { extractImgSrc } from '@plaiceholder/tailwindcss/utils';
+import { cx } from '../styles';
 import styles from '../styles/Home.module.css';
 
-export default function Home({ images }) {
-  console.log('imageProps', images);
+export default function Home({ images, tailwindImages }) {
+  console.log('images', images);
+  console.log('tailwindImages', tailwindImages);
+
+  const { plaiceholder, img } = tailwindImages;
   return (
     <div className={styles.container}>
       <Head>
@@ -31,6 +36,14 @@ export default function Home({ images }) {
                 <h2>{imageProps.title}</h2>
               </div>
             ))}
+
+          <div className={styles.card}>
+            <div className={cx(plaiceholder)}>
+              <Image {...img} alt="A Cat" layout="responsive" />
+            </div>
+
+            <h2>Tailwind Style Image</h2>
+          </div>
         </div>
       </main>
 
@@ -63,6 +76,8 @@ export const getStaticProps = async () => {
       alt: 'A Dog',
     },
   ];
+  const plaiceholder = 'plaiceholder-[/images/cat.jpg]';
+  const { img, base64 } = await getPlaiceholder(extractImgSrc(plaiceholder));
 
   const images = await Promise.all(
     imagePaths.map(async (src) => {
@@ -76,6 +91,10 @@ export const getStaticProps = async () => {
   return {
     props: {
       images,
+      tailwindImages: {
+        plaiceholder,
+        img,
+      },
     },
   };
 };

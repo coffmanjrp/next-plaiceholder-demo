@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@joebell/cx": "^0.1.0",
     "@plaiceholder/next": "^2.1.0",
     "@plaiceholder/tailwindcss": "^2.1.0",
     "@tailwindcss/aspect-ratio": "^0.2.1",
@@ -19,10 +20,10 @@
     "sharp": "^0.29.1"
   },
   "devDependencies": {
-    "autoprefixer": "^10.3.4",
+    "autoprefixer": "^9.8.6",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
-    "postcss": "^8.3.6",
-    "tailwindcss": "^2.2.15"
+    "postcss": "^7.0.36",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14"
   }
 }

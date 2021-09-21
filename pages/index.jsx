@@ -1,8 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import Image from 'next/image';
+import { getPlaiceholder } from 'plaiceholder';
+import styles from '../styles/Home.module.css';
 
-export default function Home() {
+export default function Home({ imageProps }) {
+  console.log('imageProps', imageProps);
   return (
     <div className={styles.container}>
       <Head>
@@ -23,6 +25,14 @@ export default function Home() {
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
+            <div>
+              <Image
+                {...imageProps}
+                alt="test"
+                layout="responsive"
+                placeholder="blur"
+              />
+            </div>
             <h2>Documentation &rarr;</h2>
             <p>Find in-depth information about Next.js features and API.</p>
           </a>
@@ -65,5 +75,18 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  )
+  );
 }
+
+export const getStaticProps = async () => {
+  const { base64, img } = await getPlaiceholder('/images/dogs.jpg');
+
+  return {
+    props: {
+      imageProps: {
+        ...img,
+        blurDataURL: base64,
+      },
+    },
+  };
+};

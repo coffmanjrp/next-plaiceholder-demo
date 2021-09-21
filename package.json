@@ -9,9 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@plaiceholder/next": "^2.1.0",
+    "fs": "^0.0.1-security",
     "next": "11.1.2",
+    "path": "^0.12.7",
+    "plaiceholder": "^2.0.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "sharp": "^0.29.1"
   },
   "devDependencies": {
     "eslint": "7.32.0",

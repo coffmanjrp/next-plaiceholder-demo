@@ -1,6 +1,6 @@
 # Next Plaiceholder Demo
 
-An image gallery for the Pixabay API builds with React.
+A image blur placeholder demo.
 
 [DEMO](https://next-plaiceholder-demo.vercel.app/)
 

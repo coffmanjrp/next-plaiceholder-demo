@@ -27,9 +27,9 @@ yarn
 3. And you can start localhost by
 
 ```
-npm start
+npm run dev
 # or
-yarn start
+yarn dev
 ```
 
 Enjoy!
